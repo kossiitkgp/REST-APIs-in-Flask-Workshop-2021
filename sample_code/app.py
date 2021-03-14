@@ -25,8 +25,7 @@ def get_shows():
     return jsonify(shows=shows_data), 200
 
 # adding a new show
-
-
+# {"name": "NAME OF THE SHOW", "platform": "NAME OF PLATFORM", "rating": "999999"}
 @app.route('/addshow', methods=["POST"])
 def add_shows():
     new_show = request.json
@@ -78,6 +77,7 @@ def edit_show():
 
 # Deleting a new show
 # sample data
+# it should be an dictionary already existing in the database 
 # {
 # "show":
 # {"name": "Good boys",
