@@ -78,19 +78,17 @@ def edit_show():
 # Deleting a new show
 # sample data
 # it should be an dictionary already existing in the database 
-# {
-# "show":
+# 
 # {"name": "Good boys",
 # "platform": "Netflix",
 # "rating": "7.8",
 # "description": "nice"}
-# }
+# 
 
 
 @app.route('/deleteshow', methods=["DELETE"])
 def delete_show():
-    show = request.json['show']
-
+    show = request.json
     # get the currents shows
     with open('database.json') as f:
         file_data = json.load(f)
