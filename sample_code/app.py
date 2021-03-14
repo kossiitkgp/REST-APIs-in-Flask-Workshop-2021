@@ -1,7 +1,9 @@
+
 from flask import Flask, jsonify, request
 import json
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def hello_world():
@@ -13,34 +15,46 @@ def products():
     return 'Hello, from the API'
 
 # getting all the shows
+
+
 @app.route('/shows', methods=['GET'])
 def get_shows():
     with open('database.json') as f:
         file_data = json.load(f)
         shows_data = file_data['data']
     return jsonify(shows=shows_data), 200
-    
+
 # adding a new show
+
+
 @app.route('/addshow', methods=["POST"])
 def add_shows():
-    new_show = request.json['show']
+    new_show = request.json
     # get the currents shows
     with open('database.json') as f:
         file_data = json.load(f)
         current_shows = file_data['data']
-    
+
     # add the new show from request
     current_shows.append(new_show)
 
     # write to the file
     with open('database.json', 'w') as f:
         json.dump({'data': current_shows}, f)
-    
+
     # success
     return "success", 200
 
+# sample data
+# {
 
+# "show": "KGF",
+# "description" : "nice"
+
+# }
 # editing a new show
+
+
 @app.route('/editshow', methods=["PUT"])
 def edit_show():
     show_name = request.json['show']
@@ -49,7 +63,7 @@ def edit_show():
     with open('database.json') as f:
         file_data = json.load(f)
         current_shows = file_data['data']
-    
+
     # update the information about the show
     for show in current_shows:
         if show['name'] == show_name:
@@ -58,27 +72,37 @@ def edit_show():
     # write to the file
     with open('database.json', 'w') as f:
         json.dump({'data': current_shows}, f)
-    
+
     # success
     return "success", 200
 
 # Deleting a new show
+# sample data
+# {
+# "show":
+# {"name": "Good boys",
+# "platform": "Netflix",
+# "rating": "7.8",
+# "description": "nice"}
+# }
+
+
 @app.route('/deleteshow', methods=["DELETE"])
 def delete_show():
     show = request.json['show']
-    
+
     # get the currents shows
     with open('database.json') as f:
         file_data = json.load(f)
         current_shows = file_data['data']
-    
+
     # update the information about the show
     current_shows.remove(show)
 
     # write to the file
     with open('database.json', 'w') as f:
         json.dump({'data': current_shows}, f)
-    
+
     # success
     return "success", 200
 
